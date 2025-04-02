@@ -15,6 +15,7 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const loader = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLImageElement>(null);
 
   const API_KEY = process.env.NEXT_PUBLIC_UNSPLASH_API_KEY;
 
@@ -29,12 +30,33 @@ export default function Home() {
     if (loader.current) {
       observer.observe(loader.current);
     }
+    
+    // Function to handle keydown events
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'ArrowDown') {
+            event.preventDefault(); // Prevent default down arrow behavior
+
+            // Calculate scroll amount (height of one image + gap)
+            if (photoRef.current) {
+                const imageHeight = photoRef.current.offsetHeight;
+                const gap = 16; // Tailwind's gap-4 = 1rem = 16px
+                const scrollAmount = imageHeight + gap;
+                window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+            }
+        }
+    };
+
+    // Add event listener for keydown
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       if (loader.current) {
         observer.unobserve(loader.current);
       }
+        // Cleanup: Remove event listener when component unmounts
+        window.removeEventListener('keydown', handleKeyDown);
     };
+    
   }, []);
 
   useEffect(() => {
@@ -83,9 +105,10 @@ export default function Home() {
         {photos.length > 0 ? (
           <div className="max-w-[600px] grid grid-cols-1 gap-4">
             {photos.map((photo, index) => (
-              <div key={photo.id} className="relative">
+              <div key={`${photo.id}-${index}`} className="relative">
                 <img
-                  src={photo.urls.small}
+                    ref={index === 0 ? photoRef : null}
+                    src={photo.urls.small}
                   alt={photo.alt_description}
                   className="w-full h-auto rounded-lg shadow-md object-cover"
                 />
