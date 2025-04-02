@@ -39,11 +39,15 @@ export default function Home() {
 
   useEffect(() => {
     if (loading) {
-      let url = `https://api.unsplash.com/photos?page=${page}&per_page=10&client_id=${API_KEY}`;
+      const url = `https://api.unsplash.com/photos?page=${page}&per_page=10&client_id=${API_KEY}`;
       fetch(url)
         .then((response) => response.json())
-        .then((data: Photo[]) => {
-          setPhotos((prevPhotos) => [...prevPhotos, ...data]);
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setPhotos((prevPhotos) => [...prevPhotos, ...data]);
+          } else {
+            console.error("Error: Data from Unsplash API is not an array.", data);
+          }
           setLoading(false);
         })
         .catch((error) => {
