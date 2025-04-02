@@ -76,13 +76,13 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="max-w-[1400px] w-full p-4">
+      <div className="max-w-[800px] w-full p-4">
         <h1 className="text-3xl font-bold text-center mb-8">
           Infinite Scroll of Images
         </h1>
         {photos.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {photos.map((photo) => (
+          <div className="max-w-[600px] grid grid-cols-1 gap-4">
+            {photos.map((photo, index) => (
               <div key={photo.id} className="relative">
                 <img
                   src={photo.urls.small}
@@ -110,3 +110,4 @@ export default function Home() {
     </div>
   );
 }
+
