@@ -11,7 +11,6 @@ interface Photo {
 }
 
 export default function Home() {
-  const API_KEY = process.env.NEXT_PUBLIC_UNSPLASH_API_KEY;
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const photoRef = useRef<HTMLImageElement>(null);
@@ -19,7 +18,7 @@ export default function Home() {
   const gap = 16;
     
   useEffect(() => {
-    const url = `https://api.unsplash.com/photos?page=1&per_page=20&client_id=${API_KEY}`;
+    const url = `https://api.unsplash.com/photos?page=1&per_page=20&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_API_KEY}`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -64,8 +63,8 @@ export default function Home() {
       };
     }, [photos.length]);
 
-    return ( 
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 overflow-hidden">
+    return <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 overflow-hidden">
+            
             <div className="max-w-[800px] w-full p-4 relative">
                 {photos.length > 0 && (
                     photos.map((photo, index) => {
@@ -77,12 +76,11 @@ export default function Home() {
                                 className={`absolute transition-transform duration-500`}
                                 style={{ transform: `translateY(${position}px)`, top: '50%', left: '50%', marginTop: '-50%', marginLeft: '-50%', width: '100%', height: 'auto' }}
                             >
-                                <img ref={index === selectedImageIndex ? photoRef : null} src={photo.urls.small} alt={photo.alt_description} className={`w-[600px] h-auto rounded-lg shadow-md object-cover ${isSelected ? 'block' : 'hidden'}`} /> 
-                                </div>
-                            </div>
+                                <img ref={index === selectedImageIndex ? photoRef : null} src={photo.urls.small} alt={photo.alt_description} className={`w-[600px] h-auto rounded-lg shadow-md object-cover ${isSelected ? 'block' : 'hidden'}`} />
+                            </div> 
                         );
                     })}
             </div>
         </div>
-    );
+    
 }
