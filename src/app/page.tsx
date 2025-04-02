@@ -11,6 +11,7 @@ interface Photo {
 }
 
 export default function Home() {
+  const API_KEY = process.env.NEXT_PUBLIC_UNSPLASH_API_KEY;
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const photoRef = useRef<HTMLImageElement>(null);
@@ -63,7 +64,7 @@ export default function Home() {
       };
     }, [photos.length]);
 
-    return (
+    return ( 
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 overflow-hidden">
             <div className="max-w-[800px] w-full p-4 relative">
                 {photos.length > 0 && (
