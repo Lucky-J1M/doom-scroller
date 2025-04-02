@@ -45,8 +45,17 @@ export default function Home() {
         .then((data) => {
           if (Array.isArray(data)) {
             setPhotos((prevPhotos) => [...prevPhotos, ...data]);
-          } else {
-            console.error("Error: Data from Unsplash API is not an array.", data);
+          } else if (data.errors) {
+            console.error('Error from Unsplash API:', data.errors);
+          } else if (data.results) {
+            if (Array.isArray(data.results)) {
+              setPhotos((prevPhotos) => [...prevPhotos, ...data.results]);
+            }
+            else {
+                console.error("Error: Data from Unsplash API is a search result, but the results key is not an array.", data);
+            }
+          }else{
+            console.error("Error: Unexpected data from Unsplash API:", data);
           }
           setLoading(false);
         })
