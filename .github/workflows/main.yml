@@ -23,6 +23,6 @@
             uses: FirebaseExtended/action-hosting-deploy@v0
             with:
               repoToken: '${{ secrets.GITHUB_TOKEN }}'
-              firebaseServiceAccount: '${{ secrets.FIREBASE_TOKEN }}'
+              firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DOOM_SCROLLER_4D499 }}'
               channelId: live
               projectId: doom-scroller-4d499
