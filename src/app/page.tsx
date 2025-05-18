@@ -10,7 +10,7 @@ const Home = () => {
   const fetchImages = async () => {
     setLoading(true);
     // Using Unsplash Source API for random images
-    const newImages = Array.from({ length: 10 }).map((_, i) => `https://source.unsplash.com/random/800x600/?nature&sig=${Date.now() + i}`);
+    const newImages = Array.from({ length: 10 }).map((_, i) => `https://api.unsplash.com/photos/?client_id=Reg9c3clJEKlV_6zgXRykpJrgPi1JKlfV5nR7qyC-j4`);
     // Adding a slight delay to simulate network request
     // await new Promise(resolve => setTimeout(resolve, 500));
     setImages(prevImages => [...prevImages, ...newImages]);
