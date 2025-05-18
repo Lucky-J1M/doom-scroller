@@ -9,8 +9,10 @@ const Home = () => {
 
   const fetchImages = async () => {
     setLoading(true);
+
+    
     // Using Unsplash Source API for random images
-    const newImages = Array.from({ length: 10 }).map((_, i) => `https://api.unsplash.com/photos/?client_id=Reg9c3clJEKlV_6zgXRykpJrgPi1JKlfV5nR7qyC-j4`);
+    const newImages = Array.from({ length: 10 }).map((_, i) => `https://api.unsplash.com/photos/random?client_id=Reg9c3clJEKlV_6zgXRykpJrgPi1JKlfV5nR7qyC-j4`);
     // Adding a slight delay to simulate network request
     // await new Promise(resolve => setTimeout(resolve, 500));
     setImages(prevImages => [...prevImages, ...newImages]);
@@ -36,9 +38,9 @@ const Home = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Infinite Scroll Image Gallery</h1>
       <div className="grid grid-cols-1 gap-4">
-        {images.map((imageUrl, index) => (
+        { images.map((imageUrl, index) => { console.log(imageUrl);  return (
           <img key={index} src={imageUrl} alt={`Image ${index}`} className="w-full h-auto" />
-        ))}
+        )})}
       </div>
       {loading && <p className="text-center mt-4">Loading more images...</p>}
     </div>
