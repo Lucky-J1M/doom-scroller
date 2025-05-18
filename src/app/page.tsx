@@ -9,18 +9,12 @@ const Home = () => {
 
   const fetchImages = async () => {
     setLoading(true);
-    try {
-      const response = await fetch('/api/unsplash');
-      if (!response.ok) {
-        throw new Error(`Error fetching images: ${response.statusText}`);
-      }
-      const newImages = await response.json();
-      setImages(prevImages => [...prevImages, ...newImages]);
-    } catch (error) {
-      console.error("Failed to fetch images:", error);
-    } finally {
-      setLoading(false);
-    }
+    // Using Unsplash Source API for random images
+    const newImages = Array.from({ length: 10 }).map((_, i) => `https://source.unsplash.com/random/800x600/?nature&sig=${Date.now() + i}`);
+    // Adding a slight delay to simulate network request
+    // await new Promise(resolve => setTimeout(resolve, 500));
+    setImages(prevImages => [...prevImages, ...newImages]);
+    setLoading(false);
   };
 
   useEffect(() => {
