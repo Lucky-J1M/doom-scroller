@@ -2,6 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import * as senza from "senza-sdk";
 
 const Home = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -10,7 +11,7 @@ const Home = () => {
   const fetchImages = async () => {
     setLoading(true);
 
-    
+
     // Using Unsplash Source API for random images
     const newImages = Array.from({ length: 10 }).map((_, i) => `https://api.unsplash.com/photos/random?client_id=Reg9c3clJEKlV_6zgXRykpJrgPi1JKlfV5nR7qyC-j4`);
     // Adding a slight delay to simulate network request
@@ -33,6 +34,21 @@ const Home = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loading]);
+
+
+  useEffect(() => {
+    console.log( "On-load Register");
+    window.onload = async () => {
+      try {
+        await senza.init();
+        senza.uiReady();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, []);
+
+
 
   return (
     <div className="container mx-auto p-4">
