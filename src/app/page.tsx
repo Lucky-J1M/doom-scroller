@@ -2,7 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import * as senza from "senza-sdk";
+import * as senza from 'senza-sdk';
 
 const Home = () => {
   const [images, setImages] = useState<string[]>([]);
